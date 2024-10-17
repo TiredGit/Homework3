@@ -91,6 +91,7 @@ class Product(models.Model):
                                    related_name='products')
     category = models.ForeignKey('ProductCategory', verbose_name='Категория', related_name='products',
                                  blank=True, null=True, on_delete=models.SET_NULL)
+    product_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Продукт'

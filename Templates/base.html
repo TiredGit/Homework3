@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {% block title %} {% endblock %} </title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <style>
+        .custom-nav {
+            margin: 20px auto;
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 600px;
+            text-align: center;
+        }
+        .custom-nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div class="custom-nav">
+        <h5>Навигация</h5>
+        <a href="{% url 'products_list' %}">Список товаров</a>
+        <a href="{% url 'product_create' %}">Добавление товара</a>
+    </div>
+    {% bootstrap_javascript %}
+</body>
+</html>

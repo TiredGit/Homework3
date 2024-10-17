@@ -17,6 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from App import views
+from models import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('products_list/', views.ProductsList.as_view(), name='products_list'),
+    path('products/<int:pk>/', views.ProductsDetail.as_view(), name='product_details'),
+    path('products/<int:pk>/update/', views.ProductsUpdate.as_view(), name='product_update'),
+    path('products/<int:pk>/delete/', views.ProductsDelete.as_view(), name='product_delete'),
+    path('products/create/', views.ProductsCreate.as_view(), name='product_create'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

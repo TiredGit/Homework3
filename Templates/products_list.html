@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Товары {% endblock %}
+{% block content %}
+
+<h1>Товары</h1>
+{% if products|length > 0 %}
+    <h5>Всего товаров: {{ products|length }}</h5>
+    <div class="mb-4">
+        <span>Фильтровать по:</span>
+        <a href="?sort=name" class="btn btn-outline-primary">Название</a>
+        <a href="?sort=price" class="btn btn-outline-primary">Цена</a>
+        <a href="?sort=id" class="btn btn-outline-primary">Id</a>
+    </div>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mt-4">
+            <div class="card h-100 text-center">
+                <div class="card-img-container">
+                    {% if product.product_picture %}
+                        <img src="{{ product.product_picture.url }}" class="card-img-top img-fluid" alt="Product Picture"
+                            style="height: 250px; object-fit: contain;">
+                    {% else %}
+                        <img src="{% static 'no_product.png' %}" class="card-img-top img-fluid" alt="Product Picture"
+                            style="height: 250px; object-fit: contain;">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.product_name|truncatechars:15 }}</h5>
+                    <p class="card-text">Цена: {{ product.price|floatformat:0 }} ₽</p>
+                    <a href="{% url 'product_details' product.pk %}" class="btn btn-primary">Детали</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Нет товаров для отображения.</p>
+{% endif %}
+{% endblock %}
