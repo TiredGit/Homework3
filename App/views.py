@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-
+from django_filters.views import FilterView
+from App import filters
 from App.models import Product
 
 class ProductListTemplateView(TemplateView):
@@ -12,23 +13,12 @@ class ProductListTemplateView(TemplateView):
         context['products'] = Product.objects.all()
         return context
 
-class ProductsList(ListView):
+class ProductsList(FilterView):
     template_name = 'products_list.html'
     model = Product
     context_object_name = 'products'
+    filterset_class = filters.Product
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        sort_by = self.request.GET.get('sort', None)
-
-        if sort_by == 'id':
-            queryset = queryset.order_by('id')
-        elif sort_by == 'price':
-            queryset = queryset.order_by('price')
-        else:
-            queryset = queryset.order_by('product_name')
-
-        return queryset
 
 class ProductsDetail(DetailView):
     template_name = 'product_details.html'

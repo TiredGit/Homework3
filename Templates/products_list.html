@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block title %} Товары {% endblock %}
-{% block content %}
 
+{% block sidebar %}
+    <h1>Фильтры:</h1>
+    <div class="col-md-3">
+        <div class="card-body">
+            <form method="get">
+                {% csrf_token %}
+                {{ filter.form.as_p }}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
 <h1>Товары</h1>
 {% if products|length > 0 %}
     <h5>Всего товаров: {{ products|length }}</h5>
-    <div class="mb-4">
-        <span>Фильтровать по:</span>
-        <a href="?sort=name" class="btn btn-outline-primary">Название</a>
-        <a href="?sort=price" class="btn btn-outline-primary">Цена</a>
-        <a href="?sort=id" class="btn btn-outline-primary">Id</a>
-    </div>
 
     <div class="row">
         {% for product in products %}
