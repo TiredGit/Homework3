@@ -3,7 +3,44 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django_filters.views import FilterView
 from App import filters
-from App.models import Product
+from App.models import Product, User, UserProfile, ProductCategory, ShippingAddress, OrderProduct, Order
+
+from rest_framework import viewsets
+from App import serializers
+
+
+class UserAPI(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
+class UserProfileAPI(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = serializers.UserProfileSerializer
+
+
+class CategoryAPI(viewsets.ModelViewSet):
+    queryset = ProductCategory.objects.all()
+    serializer_class = serializers.ProductCategorySerializer
+
+
+class ProductAPI(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = serializers.ProductSerializer
+
+class ShippingAddressAPI(viewsets.ModelViewSet):
+    queryset = ShippingAddress.objects.all()
+    serializer_class = serializers.ShippingAddressSerializer
+
+
+class OrderAPI(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = serializers.OrderSerializer
+
+
+class OrderProductAPI(viewsets.ModelViewSet):
+    queryset = OrderProduct.objects.all()
+    serializer_class = serializers.OrderProductSerializer
 
 class ProductListTemplateView(TemplateView):
     template_name = 'products_list.html'
